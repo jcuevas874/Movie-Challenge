@@ -4,15 +4,15 @@
 
 ## Index
 
-- [1. Movie Search] (# 1-Movie Search)
-- [2. Get Movies] (# 2-Get Movies)
-- [3. Find and Replace] (# 3-Find and Replace)
+- [1. Movie Search](#1-Movie-Search)
+- [2. Get Movies](#2-Get-Movies)
+- [3. Find and Replace](#3-Find-and-Replace)
 
 ---
 
 ## 1. Movie Search
 
-API created with the function of collecting information from an API (http://www.omdbapi.com/) by Title and saving it in a database, the movies are required by the user using the GET method, using the Database from Mongo, you can additionally search the header for year of the movie and make the search more precise.
+API created with the function of collecting information from an API http://www.omdbapi.com/ by Title and saving it in a database, the movies are required by the user using the GET method, using the Database from Mongo, you can additionally search the header for year of the movie and make the search more precise.
 
 The information collected is:
 
