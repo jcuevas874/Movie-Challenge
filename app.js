@@ -41,8 +41,8 @@ router.get("/:movie", async ctx => { // /: Nos permite agregar en el link la pel
 });
 
 router.get("/", async ctx => {
-    const limit = parseInt(ctx.header.limit, 5) || 5;
-    const page = parseInt(ctx.header.page, 5) || 1;
+    const limit = Number(ctx.header.limit) || 5;
+    const page = Number(ctx.header.page) || 1;
     const findAllMovies = await Movie.paginate({}, {limit, page});
     ctx.body = findAllMovies;
 })
