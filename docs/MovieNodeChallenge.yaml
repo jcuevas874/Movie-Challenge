@@ -1,0 +1,242 @@
+---
+openapi: 3.0.0
+info:
+  title: MovieNodeChallenge API
+  description: Challenge by CLM for a Full Stack Jr Developer position called `MovieNodeChallenge` by creating a Microservice using NODEJS with 2 Endpoints.
+  contact:
+    name: Jesus Cuevas
+    url: https://gitlab.com/jcuevas874/movie-finder
+    email: jcuevas874@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: "1.1"
+servers:
+- url: https://virtserver.swaggerhub.com/jcuevas874/MovieNodeChallenge/1.1
+  description: SwaggerHub API Auto Mocking
+tags:
+- name: MovieSearch
+  description: Search and Store your favorite movie
+- name: SearchDatabase
+  description: Access to Database
+- name: SearchAndReplace
+  description: Search and replace plot movie
+paths:
+  /{movie}:
+    get:
+      tags:
+      - MovieSearch
+      summary: Search movies from API
+      description: Search movies from external API and store it in Database
+      parameters:
+      - name: movie
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: year
+        in: header
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchMovie'
+        "400":
+          description: Invalid status value
+      security: []
+  /:
+    get:
+      tags:
+      - SearchDatabase
+      summary: Search in data base all the movies stored
+      description: Returns movies stored in Database saved in page of 5
+      parameters:
+      - name: page
+        in: header
+        description: Page number that you want to get
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: limit
+        in: header
+        description: number of movies per page
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SearchDatabase'
+        "400":
+          description: Bad Request
+      security: []
+    post:
+      tags:
+      - SearchAndReplace
+      summary: Search in database movie and can replace the plot
+      description: This can only be done by the logged in user.
+      operationId: createUser
+      parameters:
+      - name: year
+        in: header
+        description: Let you find the movie by year.
+        required: false
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Parameters for finding movie and replace plot
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/saveMovieService'
+      responses:
+        "200":
+          description: OK
+          content:
+            text:
+              schema:
+                $ref: '#/components/schemas/saveMovie'
+        "400":
+          description: Bad Request
+components:
+  schemas:
+    SearchMovie:
+      required:
+      - actor
+      - director
+      - genre
+      - plot
+      - ratings
+      - released
+      - title
+      - year
+      type: object
+      properties:
+        title:
+          type: string
+          example: Batman
+        year:
+          type: string
+          example: "1990"
+        released:
+          type: string
+          example: "1990"
+        genre:
+          type: string
+          example: action
+        director:
+          type: string
+          example: ""
+        actors:
+          type: string
+          example: ""
+        plot:
+          type: string
+          example: ""
+        ratings:
+          type: array
+          items:
+            $ref: '#/components/schemas/Rating'
+    Rating:
+      required:
+      - Source
+      - Value
+      type: object
+      properties:
+        Source:
+          type: string
+          example: ""
+        Value:
+          type: string
+          example: ""
+    SearchDatabase:
+      required:
+      - actor
+      - director
+      - genre
+      - limit
+      - page
+      - plot
+      - ratings
+      - released
+      - title
+      - totalDocs
+      - totalPages
+      - year
+      type: object
+      properties:
+        title:
+          type: string
+          example: batman beyond return of the joker
+        year:
+          type: string
+          example: "2000"
+        released:
+          type: string
+          example: 12 Dec 2000
+        genre:
+          type: string
+          example: Animation, Action, Crime, Sci-Fi, Thriller
+        director:
+          type: string
+          example: Curt Geda
+        actors:
+          type: string
+          example: Will Friedle, Kevin Conroy, Mark Hamill, Angie Harmon
+        plot:
+          type: string
+          example: The Joker is back with a vengeance, and Gothams newest Dark Knight needs answers as he stands alone to face Gotham's most infamous Clown Prince of Crime.
+        ratings:
+          type: array
+          items:
+            $ref: '#/components/schemas/Rating'
+        totaldocs:
+          type: string
+          example: "2"
+        limit:
+          type: string
+          example: "5"
+        totalPages:
+          type: string
+          example: "4"
+        page:
+          type: string
+          example: "1"
+    saveMovieService:
+      required:
+      - body
+      - find
+      - movie
+      - replace
+      type: object
+      properties:
+        movie:
+          type: string
+          example: batman
+        find:
+          type: string
+          example: gotham
+        replace:
+          type: string
+          example: CLM Dev
+    saveMovie:
+      type: string
+      example: The Dark Knight of CLM Dev City begins his war on crime with his first major enemy being Jack Napier, a criminal who becomes the clownishly homicidal Joker.

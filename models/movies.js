@@ -1,8 +1,6 @@
 const mongoosePaginate = require('mongoose-paginate-v2');
 const { Schema, model } = require("mongoose");
 
-
-
 const moviesSchema = new Schema({
   Title: String,
   Year: String,
