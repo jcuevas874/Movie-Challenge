@@ -10,7 +10,7 @@ const getMovieHandler = async (ctx) => {
   // /: Nos permite agregar en el link la pelicula a buscar, Funcion Asincrona y ctx nos permite hacer el res y el req.
   const res = await axios.get(url, {
     //axios Permite solicitar la url y colocar los parametros en un objeto y await espera la respuesta de la solicitud.
-    params: { t: ctx.request.params.movie, apikey, y: ctx.header.year }, //parametros solicitados, nombre de la pelicula, apikey y el ano que puedes solicitar.
+    params: { t: ctx.request.params.searchMovie, apikey, y: ctx.header.year }, //parametros solicitados, nombre de la pelicula, apikey y el ano que puedes solicitar.
   });
   if (res.data.Response === "False") {
     ctx.body = res.data;
